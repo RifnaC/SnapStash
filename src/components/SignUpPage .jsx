@@ -1,6 +1,7 @@
 
 import {useDispatch, useSelector} from 'react-redux'
 import { setName, setEmail, setPassword, setConfirmPassword } from '../features/auth/signUpSlice';
+import { Link } from 'react-router-dom';
 
 const SignUpPage = () => {
   const dispatch = useDispatch();
@@ -17,11 +18,12 @@ const SignUpPage = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#221034] to-[#00717C]">
-      <div className="p-8 rounded-lg shadow-lg bg-white">
-        <h2 className="mb-6 text-3xl font-bold text-[#221034]">Sign Up</h2>
+      <div className="py-8 px-16 rounded-lg shadow-lg bg-white">
+      <h2 className="mb-2 text-3xl font-bold text-[#221034] text-center">SnapStash</h2>
+        <p className="mb-6  text-[#221034] text-center">Please Sign Up </p>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium text-[#221034]">
+          <div className="mb-2">
+            <label htmlFor="name" className="block mb- text-sm font-medium text-[#221034]">
               Name
             </label>
             <input
@@ -33,8 +35,8 @@ const SignUpPage = () => {
               required
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-[#221034]">
+          <div className="mb-2">
+            <label htmlFor="email" className="block mb-1 text-sm font-medium text-[#221034]">
               Email
             </label>
             <input
@@ -46,8 +48,8 @@ const SignUpPage = () => {
               required
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block mb-2 text-sm font-medium text-[#221034]">
+          <div className="mb-2">
+            <label htmlFor="password" className="block mb-1 text-sm font-medium text-[#221034]">
               Password
             </label>
             <input
@@ -60,7 +62,7 @@ const SignUpPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-[#221034]">
+            <label htmlFor="confirmPassword" className="block mb-1 text-sm font-medium text-[#221034]">
               Confirm Password
             </label>
             <input
@@ -81,9 +83,9 @@ const SignUpPage = () => {
         </form>
         <p className="text-center text-sm text-[#221034]">
           Already have an account?{' '}
-          <a href="#" className="font-medium text-[#00717C] hover:underline">
+          <Link to={"/login"} className="font-medium text-[#00717C] hover:underline">
             Log in
-          </a>
+          </Link>
         </p>
       </div>
     </div>
