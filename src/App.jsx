@@ -5,6 +5,7 @@ import SignUpPage from './components/SignUpPage '
 import store from './app/store'
 import { Provider } from 'react-redux'
 import Cart from './components/Cart'
+import Checkout from './components/Checkout'
 
 
 const router = createBrowserRouter([
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
     element: <Cart />,
     path: "/cart",
   },
+  {
+    element: <Checkout />,
+    path: "/checkout",
+  },
+  
 ])
 function App() {
 

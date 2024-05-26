@@ -1,39 +1,51 @@
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { registerUser } from '../features/auth/signUpSlice';
 
-import {useDispatch, useSelector} from 'react-redux'
-import { setName, setEmail, setPassword, setConfirmPassword } from '../features/auth/signUpSlice';
-import { Link } from 'react-router-dom';
-
-const SignUpPage = () => {
+function SignUpPage() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPswd, setConfirmPswd] = useState('')
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { name, email, password, confirmPassword } = useSelector((state) => state.signUp);
+  const userStatus = useSelector((state) => state.status);
+  const userError = useSelector((state) => state.error);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle signup logic here
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
+    dispatch(registerUser({ name, email, password, confirmPswd }))
+      .then((result) => {
+        if (result.meta.requestStatus === 'fulfilled') {
+          navigate('/login');
+        } else {
+          console.error(result.error.message);
+        }
+      });
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#221034] to-[#00717C]">
       <div className="py-8 px-16 rounded-lg shadow-lg bg-white">
-      <h2 className="mb-2 text-3xl font-bold text-[#221034] text-center">SnapStash</h2>
+        <h2 className="mb-2 text-3xl font-bold text-[#221034] text-center">SnapStash</h2>
         <p className="mb-6  text-[#221034] text-center">Please Sign Up </p>
+        {userStatus === 'failed' && <p className="text-danger">{userError}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-2">
             <label htmlFor="name" className="block mb- text-sm font-medium text-[#221034]">
               Name
             </label>
+
+
             <input
               type="text"
               id="name"
-              value={name}
-              onChange={(e) => dispatch(setName(e.target.value))}
+              name="name"
+              onChange={(e) => setName(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00717C]"
-              required
-            />
+              required />
+
           </div>
           <div className="mb-2">
             <label htmlFor="email" className="block mb-1 text-sm font-medium text-[#221034]">
@@ -42,8 +54,10 @@ const SignUpPage = () => {
             <input
               type="email"
               id="email"
+              name='email'
               value={email}
-              onChange={(e) => dispatch(setEmail(e.target.value))}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter Email"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00717C]"
               required
             />
@@ -55,6 +69,7 @@ const SignUpPage = () => {
             <input
               type="password"
               id="password"
+              name="password"
               value={password}
               onChange={(e) => dispatch(setPassword(e.target.value))}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00717C]"
@@ -68,8 +83,9 @@ const SignUpPage = () => {
             <input
               type="password"
               id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => dispatch(setConfirmPassword(e.target.value))}
+              name="confirm password"
+              value={confirmPswd}
+              onChange={(e) => setConfirmPswd(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00717C]"
               required
             />
@@ -88,8 +104,9 @@ const SignUpPage = () => {
           </Link>
         </p>
       </div>
-    </div>
+    </div >
+
   );
-};
+}
 
 export default SignUpPage;
