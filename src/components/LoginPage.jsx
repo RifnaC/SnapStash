@@ -1,9 +1,15 @@
-import  { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { loginSuccess, logout } from '../features/auth/loginSlice';
+import axios from 'axios';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.isAuthenticated);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -15,10 +21,19 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
-  };
+    axios.post("http://localhost:3001/api/users/login", { email, password })
+        .then(result => {
+            if (result.data === "Success") {
+                dispatch(loginSuccess());
+                navigate("/")
+            } else {
+                dispatch(logout("You are not registered to this service"));
+            }
+        })
+        .catch(err => {
+            dispatch(logout(err.message));
+        });
+};
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#221034] to-[#00717C]">
@@ -63,10 +78,11 @@ const LoginPage = () => {
         </form>
         <p className="mt-4 text-center text-sm text-[#221034]">
           Don't have an account?{' '}
-          <Link to={"/signup"} className="font-medium text-[#00717C] hover:underline">
+          <Link to="/signup" className="font-medium text-[#00717C] hover:underline">
             Sign up
           </Link>
         </p>
+        {isAuthenticated && <p className="mt-4 text-center text-sm text-[#221034]">Logged in successfully!</p>}
       </div>
     </div>
   );

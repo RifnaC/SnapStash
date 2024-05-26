@@ -1,4 +1,4 @@
-import NavBar from "../features/navBar/NavBar"
+import NavBar from "./NavBar"
 import "../App.css";
 import { Link } from "react-router-dom";
 const Cart = () => {
