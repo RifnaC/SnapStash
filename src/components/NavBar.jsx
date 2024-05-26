@@ -51,7 +51,7 @@ const NavBar = () => {
                             key={item.name}
                             to={item.href}
                             className={classNames(
-                              item.current ? 'bg-[#221034] text-white' : 'text-gray-100 hover:bg-gray-900 hover:text-white',
+                              item.current ?'   bg-[#255458] text-white' : 'text-gray-100 hover:bg-gray-900 hover:text-white',
                               'rounded-md px-3 py-2 text-sm font-medium'
                             )}
                             aria-current={item.current ? 'page' : undefined}
@@ -74,7 +74,7 @@ const NavBar = () => {
                         </button>
                     </Link>
                     <span className="absolute inline-flex items-center rounded-md i bg-black-500 px-2 py-1 mb-5 ml-3 text-xs font-medium text-white ring-1 ring-inset ring-gray-500/10">0</span>
-                     <div className='text-white font-bold'>
+                     <div className='text-white p-1 mb-1 font-semibold'>
                       {isAuthenticated ? "Logout" :"Login"   }</div>                 
                       
                       
