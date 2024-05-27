@@ -211,20 +211,7 @@ const Home = () => {
           </div>
 
 
-          <div>
-            <button
-              className="absolute top-1/2 transform -translate-y-1/2 left-0 bg-gray-800 text-white p-2 rounded-full"
-              onClick={handlePrev}
-            >
-              &lt;
-            </button>
-            <button
-              className="absolute top-1/2 transform -translate-y-1/2 right-0 bg-gray-800 text-white p-2 rounded-full"
-              onClick={handleNext}
-            >
-              &gt;
-            </button>
-          </div>
+        
 
 
 
