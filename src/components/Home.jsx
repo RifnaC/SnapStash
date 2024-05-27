@@ -1,4 +1,4 @@
-import { useEffect, useState,  } from 'react';
+import { useEffect, useRef, useState, } from 'react';
 import axios from 'axios';
 import NavBar from './NavBar';
 import banner from '../assets/image-01.jpg'
@@ -8,7 +8,19 @@ import banner3 from '../assets/image-03.jpg'
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const carouselRef = useRef(null);
 
+  const handleNext = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft += carouselRef.current.offsetWidth;
+    }
+  };
+
+  const handlePrev = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft -= carouselRef.current.offsetWidth;
+    }
+  };
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -154,37 +166,77 @@ const Home = () => {
               </div>
             </div>
           </div>
-
-
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Products</h1>
-      
-        {products.map((product) => (
-          <div key={product.id} className="px-4">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h2 className="text-xl font-bold mb-2 text-gray-800">{product.title}</h2>
-                <p className="text-gray-600 mb-2">${product.price}</p>
-                <p className="text-gray-500 truncate">{product.description}</p>
+          <div className="relative max-w-full p-4 bg-neutral rounded-box">
+            <div className="overflow-hidden">
+              <div
+                className="flex space-x-4 transition-transform duration-300"
+                ref={carouselRef}
+              >
+                {products.map((product) => (
+                  <div key={product.id} className="flex-none w-64 h-96">
+                    <div className="bg-gray-200 rounded-lg shadow-md overflow-hidden h-full flex flex-col">
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                        className="w-full h-48 object-contain mix-blend-color-burn"
+                      />
+                      <div className="p-4 flex-grow flex flex-col">
+                        <h2 className="text-xl font-bold mb-2 h-24 text-gray-800">
+                          {product.title}
+                        </h2>
+                        <p className="text-gray-600 mb-2">${product.price}</p>
+                        <p className="text-gray-500 flex-grow truncate ">
+                          {product.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
+            <div className="flex justify-center mt-4 space-x-4">
+              <button
+                className="bg-gray-800 text-white p-2 rounded-full"
+                onClick={handlePrev}
+              >
+                &lt;
+              </button>
+              <button
+                className="bg-gray-800 text-white p-2 rounded-full"
+                onClick={handleNext}
+              >
+                &gt;
+              </button>
+            </div>
           </div>
-        ))}
 
-    </div>
+
+          <div>
+            <button
+              className="absolute top-1/2 transform -translate-y-1/2 left-0 bg-gray-800 text-white p-2 rounded-full"
+              onClick={handlePrev}
+            >
+              &lt;
+            </button>
+            <button
+              className="absolute top-1/2 transform -translate-y-1/2 right-0 bg-gray-800 text-white p-2 rounded-full"
+              onClick={handleNext}
+            >
+              &gt;
+            </button>
+          </div>
+
+
+
+
+
 
         </div>
       </section>
       {/* <!-- ====== Products Carousel Section End --> */}
 
-
-      </>
-      );
+    </>
+  );
 };
 
-      export default Home;
+export default Home;
