@@ -72,10 +72,12 @@ const NavBar = () => {
                         </button>
                     </Link>
                     <span className="absolute inline-flex items-center rounded-md i bg-black-500 px-2 py-1 mb-5 ml-3 text-xs font-medium text-white ring-1 ring-inset ring-gray-500/10">0</span>
-                     <div className='text-white p-1 mb-1 font-semibold'>
-                      {isAuthenticated ? "Logout" :"Login"   }</div>                 
-                      
-                      
+                    <Link to="/login">
+                      <div className='text-white p-1 mb-1 font-semibold'>
+                        {isAuthenticated ? "Logout" :"Login"   }
+                      </div>  
+                      </Link>               
+                    
                   </div>
                 </div>
               </div>
